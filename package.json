@@ -1,0 +1,5 @@
+{
+  "name": "barefoot",
+  "description": "Simple event based IRC client socket",
+  "version": "0.0.1-alpha.0"
+}
