@@ -26,20 +26,6 @@ class Client extends Socket {
     })
   }
 
-  nick (nick) {
-    this.send(`NICK ${nick}`, () => {
-      this.emit('nick', nick)
-    })
-  }
-
-  identify (username, hostname, servername, realname) {
-    this.send(`USER ${username} ${hostname} ${servername} :${realname}`)
-  }
-
-  quit (message) {
-    this.send(`QUIT :${message || DEFAULT_QUIT_MESSAGE}`)
-  }
-
   send (str) {
     if (str.length > MAX_MESSAGE_LENGTH) {
       this.send(str.substr(MAX_MESSAGE_LENGTH))
@@ -66,6 +52,24 @@ class Client extends Socket {
     } else {
       this.emit('unhandled', data)
     }
+  }
+
+  //
+  // Helper methods
+  //
+
+  nick (nick) {
+    this.send(`NICK ${nick}`, () => {
+      this.emit('nick', nick)
+    })
+  }
+
+  identify (username, hostname, servername, realname) {
+    this.send(`USER ${username} ${hostname} ${servername} :${realname}`)
+  }
+
+  quit (message) {
+    this.send(`QUIT :${message || DEFAULT_QUIT_MESSAGE}`)
   }
 
   // Allow both `say(to, text)` and `say(msg)`
