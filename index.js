@@ -67,6 +67,12 @@ class Client extends Socket {
       this.emit('unhandled', data)
     }
   }
+
+  // Allow both `say(to, text)` and `say(msg)`
+  say (to, text) {
+    const msg = (typeof to === 'object') ? to : {to, text}
+    this.send(`PRIVMSG ${msg.to} :${msg.text}`)
+  }
 }
 
 module.exports = Client
