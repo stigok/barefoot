@@ -19,6 +19,8 @@ class Client extends Socket {
   }
 
   connect () {
+    if (!this.destroyed)
+      return
     const opts = this.options
     super.connect(opts.port, opts.server, () => {
       this.nick(opts.nick)
