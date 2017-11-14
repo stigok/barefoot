@@ -18,13 +18,13 @@ class Client extends Socket {
     })
   }
 
-  connect () {
-    if (!this.destroyed)
-      return
+  connect (callback) {
     const opts = this.options
     super.connect(opts.port, opts.server, () => {
       this.nick(opts.nick)
       this.identify(opts.username, opts.hostname, opts.servername, opts.realname)
+      if (callback)
+        callback()
     })
   }
 
