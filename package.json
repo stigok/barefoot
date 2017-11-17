@@ -5,6 +5,9 @@
   "scripts": {
     "test": "mocha test/"
   },
+  "engines": {
+    "node": ">=6"
+  },
   "devDependencies": {
     "mocha": "^4.0.1"
   }
