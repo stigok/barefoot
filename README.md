@@ -6,7 +6,7 @@ A simple IRC client
 
 This program has no run-dependencies except Node.js itself.
 
-Read and run [/example/barefoot]() for now. All text written on stdin is sent to channel.
+Read and run [/example/barefoot](/example/barefoot) for now. All text written on stdin is sent to channel.
 
 Please open an issue if you're having problems.
 
