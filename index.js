@@ -30,8 +30,8 @@ class Client extends Socket {
 
   send (str) {
     if (str.length > MAX_MESSAGE_LENGTH) {
-      this.send(str.substr(MAX_MESSAGE_LENGTH))
-      str = str.substr(0, MAX_MESSAGE_LENGTH)
+      this.emit('error', `Command length too long: ${cmd.length} bytes, max ${MAX_MESSAGE_LENGTH} bytes`)
+      return
     }
     super.write(str + EOL)
   }
