@@ -1,0 +1,67 @@
+#!/usr/bin/env node
+
+const Client = require('../')
+
+const args = process.argv.slice(2)
+switch (args.length) {
+  case 0:
+    console.error('Missing first argument <server>')
+    process.exit(1)
+  case 1:
+    console.error('Missing second argument <port>')
+    process.exit(1)
+  case 2:
+    console.error('Missing third argument <nick>')
+    process.exit(1)
+  case 3:
+    console.error('Missing fourth argument <#channel>')
+    process.exit(1)
+}
+
+const [server, port, nick, channel] = args
+
+if (!channel.startsWith('#')) {
+  console.error('Channel must start with #')
+  process.exit(1)
+}
+
+const client = new Client({
+  server,
+  port,
+  nick,
+  username: nick,
+  hostname: '*',
+  servername: '*',
+  realname: `barefoot ${nick}`
+})
+
+const perform = () => {
+  console.log('barefoot\n')
+  console.log('Connected to ' + client.options.server)
+  client.send(`JOIN ${channel}`)
+}
+
+client.connect()
+client.on('ready', perform)
+client.on('privmsg', (msg) => console.log(JSON.stringify(msg)))
+client.on('error', console.error)
+
+// This event is unstable. Will change behavior in upcoming versions.
+client.on('unhandled', console.log)
+
+// Send raw IRC commands via stdin
+process.stdin.setEncoding('utf8')
+process.stdin.on('data', data => client.say(channel, data))
+
+// Exit gracefully on CTRL+C
+let exitAttempts = 0
+process.on('SIGINT', () => {
+  if (exitAttempts++ > 0) {
+    console.warn('Forced quit')
+    process.exit(1)
+  }
+  client.once('close', () => process.exit(0))
+  client.quit('Sayonara!')
+})
+
+// vi:syntax=javascript
