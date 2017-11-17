@@ -1,5 +1,11 @@
 {
   "name": "barefoot",
   "description": "Simple event based IRC client socket",
-  "version": "0.0.1-alpha.0"
+  "version": "0.0.1-alpha.0",
+  "scripts": {
+    "test": "mocha test/"
+  },
+  "devDependencies": {
+    "mocha": "^4.0.1"
+  }
 }
